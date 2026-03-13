@@ -1,0 +1,20 @@
+# HTTP e API
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Configuração e ambiente
+python-dotenv>=1.0.0
+
+# Utilitários (opcionais mas recomendados)
+pydantic>=2.0.0          # Validação de dados (se quiser evoluir)
+pandas>=2.0.0           # Para exportação CSV/Excel avançada
+
+# Testes (dev)
+pytest>=7.4.0
+pytest-cov>=4.1.0
+requests-mock>=1.11.0
+
+# Qualidade de código (dev)
+black>=23.0.0
+flake8>=6.1.0
+mypy>=1.5.0
