@@ -19,6 +19,7 @@ import argparse
 import logging
 import sys
 from pathlib import Path
+from typing import Optional  # ← ADICIONADO: Import necessário para type hints
 
 # Adiciona src ao path para imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -125,8 +126,8 @@ def inicializar_gender_classifier() -> Optional[GenderClassifier]:
         try:
             classifier = GenderClassifier(str(csv_path))
             stats = classifier.estatisticas()
-            logger.info(f"✓ Classificador de gênero carregado: {stats['total_nomes']} nomes, "
-                       f"{stats['total_variantes']} variantes")
+            logger.info(f"✓ Classificador de gênero carregado: {stats['total_nomes_principais']} nomes, "
+                       f"{stats['total_entradas_indexadas']} entradas indexadas")
             logger.info(f"  • Nomes femininos: {stats['nomes_femininos']}")
             logger.info(f"  • Nomes masculinos: {stats['nomes_masculinos']}")
             return classifier
@@ -220,10 +221,11 @@ def main() -> int:
             logger.info("=" * 70)
             logger.info(f"✅ Servidores encontrados: {stats_coleta['servidores_encontrados']}")
             logger.info(f"✅ Servidores processados: {total_processados}")
-            logger.info(f"✅ Servidores com gênero: {servidores_com_genero} "
-                       f"({servidores_com_genero/total_processados*100:.1f}%)" if total_processados > 0 else "")
-            logger.info(f"✅ Servidores com remuneração: {servidores_com_remuneracao} "
-                       f"({servidores_com_remuneracao/total_processados*100:.1f}%)" if total_processados > 0 else "")
+            if total_processados > 0:
+                logger.info(f"✅ Servidores com gênero: {servidores_com_genero} "
+                          f"({servidores_com_genero/total_processados*100:.1f}%)")
+                logger.info(f"✅ Servidores com remuneração: {servidores_com_remuneracao} "
+                          f"({servidores_com_remuneracao/total_processados*100:.1f}%)")
             logger.info(f"✅ Detalhes de remuneração coletados: {stats_coleta['detalhes_coletados']}")
             logger.info(f"✅ Arquivos criados: {stats_storage['arquivos_criados']}")
             logger.info(f"✅ Bytes escritos: {stats_storage['bytes_escritos']/1024:.1f} KB")
